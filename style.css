@@ -1,0 +1,36 @@
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; color: #203b35; background: #f3f5f3; line-height: 1.6; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font-size: 16px; }
+header, main, footer { max-width: 1180px; margin: auto; padding: 24px; }
+header { padding-top: 40px; }
+h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.15; margin: 16px 0; }
+h2 { margin-top: 0; font-size: 24px; }
+h3 { margin-bottom: 8px; }
+main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+section { min-width: 0; background: white; padding: 24px; border: 1px solid #dbe4dd; border-radius: 18px; }
+.badge { display: inline-block; background: #dceade; padding: 6px 12px; border-radius: 20px; font-size: 14px; }
+label, dt { display: block; font-weight: 650; }
+label { margin: 12px 0 8px; }
+textarea { display: block; width: 100%; max-width: 100%; min-height: 160px; border: 1px solid #819c91; border-radius: 10px; padding: 12px; font: inherit; resize: vertical; }
+button { min-height: 44px; max-width: 100%; padding: 12px 18px; margin: 8px 4px 8px 0; border: 1px solid #205c48; border-radius: 9px; background: #205c48; color: white; font: inherit; cursor: pointer; touch-action: manipulation; }
+button:disabled { opacity: .6; cursor: default; }
+.secondary { color: #205c48; background: #fff; }
+.examples { display: grid; gap: 8px; }
+.examples button { text-align: left; margin: 0; }
+button:focus-visible, a:focus-visible, textarea:focus-visible, #result:focus-visible { outline: 3px solid #9b6b00; outline-offset: 3px; }
+dd { margin: 0 0 10px; }
+p, dd, li, h1, button { overflow-wrap: anywhere; }
+ul { padding-left: 24px; }
+.muted, footer { color: #50665e; font-size: 14px; }
+.error { color: #a12828; }
+.skip { position: absolute; left: 16px; top: -100px; background: white; padding: 10px; color: #205c48; }
+.skip:focus { top: 8px; }
+@media (max-width: 900px) {
+  main { grid-template-columns: minmax(0, 1fr); }
+  header, main, footer { padding: 16px; }
+  section { padding: 20px; }
+}
+@supports (padding: max(0px)) {
+  body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); }
+}
