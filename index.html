@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Quote Assistant · VentureMind</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./analyzer.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#message">Naar het klantbericht</a>
+  <header>
+    <span class="badge">VentureMind / Gratis browserdemo</span>
+    <h1>Van klantvraag naar<br>een helder antwoord.</h1>
+    <p>Quote Assistant voor kleine renovatiebedrijven.</p>
+    <p class="muted">De analyse gebeurt op dit apparaat. Berichten worden niet verzonden of opgeslagen door deze app.</p>
+  </header>
+  <main>
+    <section aria-labelledby="input-heading">
+      <h2 id="input-heading">1. Klantbericht</h2>
+      <p>Plak een aanvraag. De demo herkent trefwoorden en enkele natuurlijke gegevens.</p>
+      <noscript><p class="error">Schakel JavaScript in om berichten lokaal te analyseren.</p></noscript>
+      <form id="intake" novalidate>
+        <label for="message">Wat schrijft uw klant?</label>
+        <textarea id="message" rows="9" maxlength="10000" required aria-describedby="message-help error" placeholder="Bijv. laminaat leggen in Utrecht, volgende week."></textarea>
+        <p id="message-help" class="muted">Maximaal 10.000 tekens. Gebruik fictieve gegevens voor deze demo.</p>
+        <p id="error" class="error" role="alert"></p>
+        <button id="analyze" type="submit" disabled>Analyseer aanvraag</button>
+        <button id="clear" type="button" class="secondary" disabled>Wis bericht en resultaat</button>
+      </form>
+      <h3>Probeer een voorbeeld</h3>
+      <div id="examples" class="examples"></div>
+      <p class="muted">Een voorbeeld of een nieuwe analyse vervangt het huidige antwoordconcept.</p>
+    </section>
+    <section id="result" aria-labelledby="result-heading" tabindex="-1">
+      <h2 id="result-heading">2. Analyse &amp; antwoord</h2>
+      <p id="placeholder" class="muted">De analyse en uw antwoordconcept verschijnen hier.</p>
+      <div id="analysis" hidden>
+        <h3>Herkenning</h3><p id="categories"></p>
+        <h3>Gevonden informatie</h3><dl id="facts"></dl>
+        <h3>Ontbrekende of onduidelijke informatie</h3><ul id="missing"></ul>
+        <label for="draft">Antwoordconcept · Nederlands · bewerkbaar</label>
+        <textarea id="draft" rows="18" aria-describedby="draft-help"></textarea>
+        <p id="draft-help" class="muted">Controleer en bewerk de tekst voor gebruik. Er wordt niets verzonden.</p>
+        <button id="copy" type="button">Kopieer antwoord</button>
+        <button id="select" type="button" class="secondary">Selecteer antwoord</button>
+        <p id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <footer>Demonstratie op basis van regels, geen AI-model. Geen prijsberekening of bindende offerte.
+    De app gebruikt geen cookies, analytics of opslag. Uw browser of systeemklembord kan tekst wel bewaren.</footer>
+</body>
+</html>
