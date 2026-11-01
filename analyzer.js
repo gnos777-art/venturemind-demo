@@ -46,6 +46,7 @@
     const states = Object.fromEntries(Object.keys(rules).map(name => [name, new Set()]));
     const normalized = message.replace(/\bniet alleen\b|\bnot only\b/gi, '');
     for (const clause of normalized.split(/[.!?;\n]+|\b(?:maar|wel|alleen|but|however|ale)\b/i)) {
+      // A negation applies only to the part of the sentence in which it appears.
       const state = /\b(?:misschien|mogelijk|of|maybe|perhaps|albo)\b/i.test(clause)
         ? 'uncertain' : negative.test(clause) ? 'negative' : 'positive';
       for (const [name, pattern] of Object.entries(rules)) {
@@ -56,6 +57,23 @@
       categories: Object.keys(states).filter(name => states[name].size === 1 && states[name].has('positive')),
       uncertain: Object.values(states).some(values => values.has('uncertain') || values.size > 1)
     };
+  }
+
+  // Do not silently select an obsolete value from a correction, a range, or
+  // several rooms. Ask for clarification rather than inventing precision.
+  function scalarDetail(message, pattern, field) {
+    const matches = [...message.matchAll(new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g'))];
+    if (!matches.length) return null;
+    const values = [...new Set(matches.map(match => match[0].trim()))];
+    if (values.length !== 1) return null;
+    const match = matches[0];
+    const sentence = message.slice(Math.max(0, message.lastIndexOf('.', match.index) + 1), message.indexOf('.', match.index) < 0 ? message.length : message.indexOf('.', match.index));
+    const before = message.slice(Math.max(0, match.index - 35), match.index);
+    if (/(?:\bgeen\b|\bniet\b|\bnot\b|\bbez\b|\bnie\b)\s*$/i.test(before)) return null;
+    if (/\b(?:maar|but|jednak)\b/i.test(sentence) && matches.length > 1) return null;
+    if (field === 'oppervlakte' && /\b(?:tot|t\/m|tussen|between|en|and)\b/i.test(sentence) && matches.length > 1) return null;
+    if (field === 'budget' && /\b(?:of|or|albo)\b/i.test(sentence) && matches.length > 1) return null;
+    return values[0];
   }
 
   function validDate(value) {
@@ -101,10 +119,12 @@
       budget: /€\s*\d(?:[\d.,]*\d)?|\d(?:[\d.,]*\d)?\s*(?:euro|EUR)\b/i,
       situatie: /[^\n.!?;]*\b(?:scheuren|beschadigd|vocht|oude|nieuwbouw|lekkage)\b[^\n.!?;]*/i
     };
-    for (const [field, pattern] of Object.entries(patterns)) {
-      const match = message.match(pattern);
-      if (match) details[field] = match[0].trim();
+    for (const field of ['oppervlakte', 'budget']) {
+      const value = scalarDetail(message, patterns[field], field);
+      if (value) details[field] = value;
     }
+    const situation = message.match(patterns.situatie);
+    if (situation) details.situatie = situation[0].trim();
     for (const field of ['locatie', 'planning']) {
       const value = intakeField(message, field);
       if (value) details[field] = value;
