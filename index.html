@@ -16,12 +16,12 @@
     <span class="badge">ScorpenSystems / Gratis browserdemo</span>
     <h1>Van klantvraag naar<br>een helder antwoord.</h1>
     <p>Quote Assistant voor kleine renovatiebedrijven.</p>
-    <p class="muted">De analyse gebeurt op dit apparaat. Berichten worden niet verzonden of opgeslagen door deze app.</p>
+    <p class="muted">De analyse gebeurt lokaal op dit apparaat. Controleer de resultaten altijd handmatig. Berichten worden niet verzonden of opgeslagen door deze app.</p>
   </header>
   <main>
     <section aria-labelledby="input-heading">
       <h2 id="input-heading">1. Klantbericht</h2>
-      <p>Plak een aanvraag. De demo herkent trefwoorden en enkele natuurlijke gegevens.</p>
+      <p>Plak een aanvraag. De demo herkent trefwoorden en enkele gegevens. Bij tegenstrijdige informatie vraagt het systeem om verduidelijking.</p>
       <noscript><p class="error">Schakel JavaScript in om berichten lokaal te analyseren.</p></noscript>
       <form id="intake" novalidate>
         <label for="message">Wat schrijft uw klant?</label>
@@ -44,7 +44,7 @@
         <h3>Ontbrekende of onduidelijke informatie</h3><ul id="missing"></ul>
         <label for="draft">Antwoordconcept · Nederlands · bewerkbaar</label>
         <textarea id="draft" rows="18" aria-describedby="draft-help"></textarea>
-        <p id="draft-help" class="muted">Controleer en bewerk de tekst voor gebruik. Er wordt niets verzonden.</p>
+        <p id="draft-help" class="muted">Controleer en bewerk de tekst voor gebruik. Vervang [Bedrijfsnaam] door uw bedrijfsnaam. Er wordt niets verzonden.</p>
         <button id="copy" type="button">Kopieer antwoord</button>
         <button id="select" type="button" class="secondary">Selecteer antwoord</button>
         <p id="copy-status" role="status" aria-live="polite"></p>
